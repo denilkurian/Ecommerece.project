@@ -1,0 +1,60 @@
+{% block content %}
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>list </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/list1.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+
+<form action="{% url 'filter' %}" method="get" class="form-inline">
+  <label style="color:#0b7dda;" for="cars">Filter by Book Genre:</label>
+  <select name="f" id="cars"  class="form-control mr-sm-2" >
+    <option   style="color:#0b7dda" value="Science">Science</option>
+    <option  style="color:#0b7dda" value="Commercial">Commercial</option>
+    <option style="color:#0b7dda" value="Historical">Historical</option>
+    <option style="color:#0b7dda" value="Fantasy">Fantasy</option>
+      <option style="color:#0b7dda" value="Drama">Drama</option>
+      <option style="color:#0b7dda" value="History">History</option>
+      <option style="color:#0b7dda" value="Adventure">Adventure</option>
+       <option style="color:#0b7dda" value="Cartoon">Cartoon</option>
+      <option style="color:#0b7dda" value="Fairytale">Fairytale</option>
+  </select>
+
+  <button style="background-color:#0b7dda" type="submit"><i class="bi bi-filter"></i></button>
+</form>
+<hr>
+
+
+<div class="container-fluid">
+    <div class="row">
+    {% for i in lists %}
+        <div class="col-sm-2 d-flex align-item-stretch">
+            <div class="card">
+           <a href="{% url 'detail1' i.pk %}" ><center><div class="image"><img src="{{ i.image_url }}" class="card-image-top"  width="70%"  alt=""></div></center></a>
+                    <div class="card-header">{{i.title}}</div>
+                    <div class="card-body">
+                        <div class="card-text"><p>{{i.author}}</p></div><br>
+                        <div class="card-text"><b>₹ {{i.price}}</b></div>
+                    </div><br>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock content %}
+
+</body>
+
+</html>
+
+
+

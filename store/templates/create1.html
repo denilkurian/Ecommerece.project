@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create-review</title>
+</head>
+<body>
+<h1>write review</h1>
+
+<form method="post" action="">
+  {% csrf_token %}
+  {{form.as_p}}
+    <p style="color:red">* Make sure everything is correct</p>
+  <input class="btn btn-outline-primary" type="submit" value="submit">
+
+</form>
+</form>
+</body>
+</html>

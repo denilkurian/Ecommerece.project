@@ -1,0 +1,69 @@
+{% load custom_filters %}
+{% block content %}
+{% include 'navbar.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+</head>
+<body >
+{% if request.user.is_authenticated %}
+<center><h2>Shopping Cart&#128722; </h2>
+<a href="/list1"><button class="btn btn-light">Continue Shopping</button></a></center>
+<hr>
+
+<div class="container-fluid">
+    <div class="row">
+   {% for cart_item in cart_items %}
+ <div class="col-sm-2 d-flex align-item-stretch">
+            <div class="card">
+           <center><div class="image"><img src="{{ cart_item.image_url }}" class="card-image-top"  width="90rem%"  alt=""></div></center>
+                    <div class="card-header">{{ cart_item.product }}</div>
+                <div class="card-body">
+        <div class="card-text">₹ {{ cart_item.price }}/book
+            <div class="card-text"><p>Quantity :{{ cart_item.quantity }}</p>
+
+    <div class="card-text"><p>Total Amount <b>₹ {{ cart_item.price|mul:cart_item.quantity }}</b></p></div>
+
+
+
+            </div>
+            <hr>
+            <a href="{% url 'detail1' cart_item.product.id %}"><button class="btn btn-primary">View</button></a>
+
+    <a href="{% url 'checkout-view' cart_item.product.id %}"><button class="btn btn-success">Buy now</button></a></div>
+                    <hr>
+        <form action="{% url 'remove_from_cart' cart_item.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-dark" type="submit">Remove</button>
+
+        </form>
+
+
+
+                    <hr>
+
+                </div></div></div>
+        {% empty %}
+                    <center><h1 style="font-family:gabriola">Your cart seems to be empty<a href="/list1">&nbsp;Go to store</a></h1></center>
+
+        {% endfor %}
+<h3 style="color:red">&nbsp;&nbsp;Total: ₹  {{ total }}</h3>
+
+{% else %}
+        <a href="/signin">Login</a>
+{% endif %}
+
+{% endblock content %}
+</body>
+</html>
+
+
+

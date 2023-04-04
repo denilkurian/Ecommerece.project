@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>navigation page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+ <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href=
+"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+        rel="stylesheet" type="text/css" />
+</head>
+<body >
+
+<ul class="q">
+  <li class="items"><a href="{% url 'homepage' %}" style="color:white"><i style="font-size:20px" class="bi bi-house"></i></a></li>
+  <li class="items"><a href="#news" style="color:white"><i style="font-size:20px"  class="bi bi-clipboard2-minus"></i></a></li>
+     {% if request.user.is_authenticated %}
+    <li class="login-btn"><a class="btn btn-outline-dark" href="{% url 'signout' %}" style="color:white">Logout</a></li>
+    {% else %}
+  <li class="login-btn"><a class="btn btn-outline-primary" href="/signin" style="color:white"><b>Login</b></a></li>
+{% endif %}
+    <form class="example" style="margin:auto;max-width:300px" action="{% url 'search' %}" method="get">
+        <div class="form-group">
+  <input class="form-control "  id="tags"  type="text" placeholder="Search items" name="q"  ></div>
+         <script>
+  $( function() {
+    var availableTags = [
+        {% for every in object_list %}
+            "{{every.title}}",
+            "{{every.book_type}}",
+        {% endfor %}
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+        <button  type="submit"><i class="fa fa-search"></i></button>
+</form>
+    {% if request.user.is_authenticated %}
+    <li class="cart"><a href="/cart" style="color:white"><i style="font-size:20px" class="bi bi-cart"></i></a></li>
+    <li class="account"><a href="#" style="color:white"><i style="font-size:20px" class="bi bi-person-square"></i></a></li>
+    {% endif %}
+</ul>
+
+
+</body>
+</html>
